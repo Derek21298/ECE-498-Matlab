@@ -25,71 +25,124 @@ enrollment = [
 
 %% Problem #1
 
-year = enrollment(1,:);
-um = enrollment(2,:) / 1e3;
-uma = enrollment(3,:) / 1e3;
-umf = enrollment(4,:) / 1e3;
-umfk = enrollment(5,:) / 1e3;
-umm = enrollment(6,:) / 1e3;
-umpi = enrollment(7,:) / 1e3;
-usm = enrollment(8,:) / 1e3;
+% Split the enrollment data into the respective universities.
+year = enrollment(1,[1:end-1]);
+um = enrollment(2,[1:end-1]) / 1e3;
+uma = enrollment(3,[1:end-1]) / 1e3;
+umf = enrollment(4,[1:end-1]) / 1e3;
+umfk = enrollment(5,[1:end-1]) / 1e3;
+umm = enrollment(6,[1:end-1]) / 1e3;
+umpi = enrollment(7,[1:end-1]) / 1e3;
+usm = enrollment(8,[1:end-1]) / 1e3;
 
 %% Figure 1
 
+% Create a stacked bar graph for the different university enrollemnts.
+% Divide by 1e3 to put in terms of thousands.
 figure(1);
-bar(year, enrollment([2:8], :)' / 1e3, 'stacked');
+bar(year, enrollment([2:8], [1:end-1])' / 1e3, 'stacked');
+% Now make the graph match the one in the HW.
 grid on;
 title('Enrollment of University of Maine Campuses, 1995-2016');
 xlabel('Year');
 ylabel('Total Enrollment (Thousands)');
-xlim([1994.5 2017.5]);
-set(gca,'XTick',[1995:1:2017]);
-legend('UM', 'UMA', 'UMF', 'UMFK', 'UMM', 'UMPI', 'USM');
+xlim([1994.5 2016.5]);
+set(gca,'XTick',[1995:1:2016]);
+legend('UM', 'UMA', 'UMF', 'UMFK', 'UMM', 'UMPI', 'USM', 'Location', 'southwest');
 
 %% Figure 2
 
+% Create a line chart for UM and USM enrollment percentages.
+% Find the total enrollment and multiply by 100 to get %.
 figure(2);
-umpercent = (um ./ sum(enrollment([2:8], :))) * 100;
-usmpercent = (usm ./ sum(enrollment([2:8], :))) * 100;
-plot(year, 1000 * umpercent, '--or', year, 1000 * usmpercent, ':m^')
+UMpercent = (um ./ sum(enrollment([2:8], [1:end-1]))) * 100;
+USMpercent = (usm ./ sum(enrollment([2:8], [1:end-1]))) * 100;
+% Plot UM data, wait, then plot the USM data.
+plot(year, 1000 * UMpercent, '--or', 'LineWidth', 3);
+hold on;
+plot(year, 1000 * USMpercent, ':m^', 'LineWidth', 3);
+% Make the graph match the one in the HW.
 grid on;
-legend('UM', 'USM')
-xlim([1995 2017]);
+legend('UM', 'USM', 'Location', 'northwest')
+xlim([1995 2016]);
 xlabel('Year')
-set(gca,'XTick',[1995:1:2017]);
+set(gca,'XTick',[1996:2:2016]);
 ylabel('Percentage of System Total (%)')
 
 %% Figure 3
 
+% Plot a stacked bar graph and line chart on top of each other.
 figure(3);
-data = [1000 * umpercent; 1000 * usmpercent];
+% An array of the line chat data
+data = [1000 * UMpercent; 1000 * USMpercent];
 
-[ax, hBar, hLine] = plotyy(year, enrollment([2:8], :)'/1e3, year, data, 'bar', 'plot');
+% Use plotyy for two different y axis values.
+% ax is the axis information.  ax(1) is bar chart. ax(2) is line chart.
+% hBar is the bar chart data.
+% hLine is the line chart data.
+[ax, hBar, hLine] = plotyy(year, enrollment([2:8], [1:end-1])'/1e3, year, data, 'bar', 'plot');
 set(hBar, 'BarLayout', 'stacked');
 
-ylabel(ax(1),'Total Enrollment (Thousands)', 'FontSize', 14);
-ylabel(ax(2),'Percentage of System Total (%)', 'FontSize', 14);
-xlabel(ax(2),'Years');
+% Make the appropriate Y axis labels.
+ylabel(ax(1),'Enrollment (Thousands)', 'FontSize', 14);
+ylabel(ax(2),'Percentage of Total Enrollment (%)', 'FontSize', 14);
 
+% Make the lines of the line chart look correctly.
 set(hLine(1), 'LineStyle', '--', ...
               'Marker', 'o', ...
               'Color', 'r', ...
-              'LineWidth', 2);
-          
+              'LineWidth', 2);          
 set(hLine(2), 'LineStyle', '--', ...
               'Marker', '^', ...
               'Color', 'm', ...
               'LineWidth', 2);
-          
+
+% Now make the graph look like the HW.
 grid(ax(1), 'on');
-xlim(ax(1),[1994.5 2017.5]);
-xlim(ax(2),[1994.5 2017.5]);
-          
+xlim(ax(1),[1994.5 2016.5]);
+xlim(ax(2),[1994.5 2016.5]);        
 ylim(ax(1), [0, 35]);
 ylim(ax(2), [26, 40]);
 set(ax(1),'YTick',0:5:35);
 set(ax(2),'YTick',26:2:40);
+legend('UM', 'UMA', 'UMF', 'UMFK', 'UMM', 'UMPI', 'USM', 'UM', 'USM', 'Location', 'northoutside', 'Orientation', 'horizontal');
+xticks([1996:2:2016]);
 
-legend('UM', 'UMA', 'UMF', 'UMFK', 'UMM', 'UMPI', 'USM', 'UM', 'USM');
-          
-xticks([1995:1:2017]);
+%% Figure 4
+
+figure(4);
+
+% Get the year over year growth.
+YOY = diff(um);
+YOYyear = linspace(1996, 2016, 21);
+
+% Plot the bar chart and line chart on top of eachother.
+[ax, hBar, hLine] = plotyy(year, um, YOYyear, YOY * 10, 'bar', 'plot');
+
+% Make the appropriate Y axis labels.
+ylabel(ax(1),'Enrollment (Thousands)', 'FontSize', 14);
+ylabel(ax(2),'Year over year growth (%)', 'FontSize', 14);
+
+% Set the parameters of the line and bar chart.
+set(hLine(1), 'LineStyle', '--', ...
+              'Marker', 'o', ...
+              'Color', 'r', ...
+              'LineWidth', 2); 
+set(hBar(1), 'FaceColor', 'g', ...
+             'EdgeColor', 'g');
+
+% Set the axes to be correct.
+grid(ax(1), 'on');
+ylim(ax(1), [9, 12]);
+ylim(ax(2), [-10, 10]);
+yticks(ax(1), [9:.5:12]);
+xlim(ax(1),[1994.5 2016.5]);
+xlim(ax(2),[1994.5 2016.5]);
+legend('UM Enrollment', 'UM YoY Growth', 'Location', 'northoutside', 'Orientation', 'horizontal');
+xticks([1996:2:2016]);
+
+
+
+
+
+
