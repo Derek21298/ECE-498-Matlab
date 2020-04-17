@@ -1,6 +1,6 @@
 %% Homework #2
 
-clear all;
+clear;
 close all;
 clc;
 

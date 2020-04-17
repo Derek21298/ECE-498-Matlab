@@ -1,7 +1,7 @@
-%% ECE 498 - Matlab
+%% ECE 498 - Matlab Homework #3
 % Author: Derek Haas
 
-clear all;
+clear;
 clc;
 close all;
 
