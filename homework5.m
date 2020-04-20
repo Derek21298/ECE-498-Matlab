@@ -76,10 +76,34 @@ fprintf('Phone number is: %s\n', string(phone));
 % Extract the five-digit zip code
 % Look for 5 digits, and if applicable, (- 4 digits).
 zip_code = regexp(addr, '[0-9]{5}(-[0-9]{4})?', 'match');
-fprintf('Zip Codes are: %s, %s, %s\n', string(zip_code{1}), string(zip_code{2}), string(zip_code{3}));
+fprintf('Zip Codes are: %s, %s, %s\n\n', string(zip_code{1}), string(zip_code{2}), string(zip_code{3}));
 
 
 %% Question 3: Tables
+
+% Store the contents of the .dat into a table.
+table = readtable('myPatients.dat');
+
+% Get the age column and find the average.
+age = table.(3)(:);
+fprintf("The average age of the Patients is %d years old\n", mean(age));
+
+% Get the gender column and find the number of males and females.
+gender = table.(2)(:);
+index = find(strcmp(gender, 'Male'));
+num_males = length(index);
+num_females = length(gender) - num_males;
+fprintf("There are %d males and %d females\n", num_males, num_females);
+
+% Get the height and weight from the dataset.
+height = table.(5)(:);
+weight = table.(6)(:);
+
+% Calculate the BMI and store to new .dat file.
+bmi = (weight*0.453592)./((height*0.0254).^2);
+table.BMI = bmi;
+writetable(table, 'myPatients2.dat');
+
 
 
 

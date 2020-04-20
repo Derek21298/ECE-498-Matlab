@@ -1,0 +1,8 @@
+LastName,Gender,Age,Location,Height,Weight,Smoker,Systolic,Diastolic,SelfAssessedHealthStatus
+Smith,Male,38,County General Hospital,71,176,1,124,93,Excellent
+Johnson,Male,43,VA Hospital,69,163,0,109,77,Fair
+Williams,Female,38,St. Mary's Medical Center,64,131,0,125,83,Good
+Jones,Female,40,VA Hospital,67,133,0,117,75,Fair
+Brown,Female,49,County General Hospital,64,119,0,122,80,Good
+Davis,Female,46,St. Mary's Medical Center,68,142,0,121,70,Good
+Miller,Female,33,VA Hospital,64,142,1,130,88,Good

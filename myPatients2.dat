@@ -1,0 +1,8 @@
+LastName,Gender,Age,Location,Height,Weight,Smoker,Systolic,Diastolic,SelfAssessedHealthStatus,BMI
+Smith,Male,38,County General Hospital,71,176,1,124,93,Excellent,24.5467457013073
+Johnson,Male,43,VA Hospital,69,163,0,109,77,Fair,24.070625498949
+Williams,Female,38,St. Mary's Medical Center,64,131,0,125,83,Good,22.4858495615429
+Jones,Female,40,VA Hospital,67,133,0,117,75,Fair,20.8305141047796
+Brown,Female,49,County General Hospital,64,119,0,122,80,Good,20.4260770826229
+Davis,Female,46,St. Mary's Medical Center,68,142,0,121,70,Good,21.5907869532002
+Miller,Female,33,VA Hospital,64,142,1,130,88,Good,24.3739743338862
