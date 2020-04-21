@@ -26,3 +26,49 @@ enrollment = [
 9721	9966	10230	10462	10645	10820	10966	11382	11007	11089	10974	10478	10453	10009	9655	9654	9301	9385	8923	8428    7739    7855
 ];
 
+% Get data needed to make the fitting.
+year = enrollment(1,:);
+um = enrollment(2,:) / 1e3;
+
+% Perform curve fitting.
+% I chose poly5 because the curve appeared to fit the data the best without
+% overfitting.  The future values of poly5 also look reasonable.
+f = fit(year', um', 'poly5', 'Normalize', 'on');
+
+% This is for calculating future confidence intervals
+yearFuture = (2016:1:2020).';
+enrollFuture = f(yearFuture);
+ci = predint(f, yearFuture, 0.95, 'observation');
+
+% Make a plot of the regular data and fitted data.
+figure(1);
+
+% Plot the regular data.
+plot(year, um, 'LineWidth', 3, 'Color', 'g');
+hold on;
+% Plot the fitted data and future data.
+plot(f, year', um', 'predobs');
+plot(f)
+% Plot the future confidence intervals.
+errorbar(yearFuture, enrollFuture, enrollFuture-ci(:,1), ci(:,2)-enrollFuture, '.');
+
+% Make the graph look nice.
+grid on;
+title('UMaine Enrollment');
+xlabel('Year');
+ylabel('Enrollment (Thousands)');
+legend('Unfitted Data', 'Recorded Data Points', 'Fitted Curve');
+xlim([1995 2021]);
+
+% Make a plot of the residuals.
+figure(2);
+plot(f, year', um', 'residuals');
+xlim([1995 2016]);
+xlabel('Year');
+ylabel('Residuals');
+title('Residuals Plot');
+grid on;
+
+
+
+
