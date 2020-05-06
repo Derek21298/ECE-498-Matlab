@@ -1,4 +1,8 @@
 *
+!publish/
+!publish/*
+!src/
+!src/*
 !.gitignore
 !*.m
 !*.dat
